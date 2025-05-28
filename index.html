@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Victor Gonçalves | Desenvolvedor Fullstack</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #0f0e17;
+      color: #fffffe;
+      overflow-x: hidden;
+      cursor: none;
+    }
+    .custom-cursor {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #6247ea, #e94584);
+      pointer-events: none;
+      mix-blend-mode: difference;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.2s ease;
+    }
+    .cursor-follower {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid rgba(98, 71, 234, 0.5);
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.4s ease, width 0.3s ease, height 0.3s ease;
+    }
+    .smoke {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background: radial-gradient(circle, rgba(98, 71, 234, 0.3) 0%, rgba(98, 71, 234, 0) 70%);
+      border-radius: 50%;
+      filter: blur(20px);
+      animation: float 15s infinite ease-in-out;
+      opacity: 0.7;
+    }
+    .smoke:nth-child(2n) {
+      background: radial-gradient(circle, rgba(233, 69, 132, 0.3) 0%, rgba(233, 69, 132, 0) 70%);
+      animation-delay: 5s;
+    }
+    .smoke:nth-child(3n) {
+      background: radial-gradient(circle, rgba(0, 204, 255, 0.3) 0%, rgba(0, 204, 255, 0) 70%);
+      animation-delay: 8s;
+    }
+    @keyframes float {
+      0% {
+        transform: translate(0, 0) rotate(0deg);
+      }
+      50% {
+        transform: translate(50px, -50px) rotate(180deg);
+      }
+      100% {
+        transform: translate(0, 0) rotate(360deg);
+      }
+    }
+    .tech-icon {
+      transition: all 0.3s ease;
+    }
+    .tech-icon:hover {
+      transform: translateY(-10px) scale(1.1);
+      filter: drop-shadow(0 0 10px rgba(98, 71, 234, 0.7));
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(98, 71, 234, 0.3);
+      border-color: rgba(98, 71, 234, 0.5);
+    }
+    .gradient-text {
+      background: linear-gradient(45deg, #6247ea, #e94584, #00ccff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .gradient-bg {
+      background: linear-gradient(45deg, #6247ea, #e94584, #00ccff);
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -20px;
+      top: 0;
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(to bottom, #6247ea, #e94584);
+    }
+    .timeline-dot {
+      position: absolute;
+      left: -26px;
+      top: 0;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #6247ea, #e94584);
+      box-shadow: 0 0 0 3px rgba(98, 71, 234, 0.3);
+    }
+    .contact-input {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+    .contact-input:focus {
+      outline: none;
+      border-color: #6247ea;
+      box-shadow: 0 0 0 3px rgba(98, 71, 234, 0.3);
+    }
+    .whatsapp-btn {
+      background: linear-gradient(45deg, #25D366, #128C7E);
+      transition: all 0.3s ease;
+    }
+    .whatsapp-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(18, 140, 126, 0.3);
+    }
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(45deg, #6247ea, #e94584);
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    .active-nav::after {
+      width: 100%;
+    }
+    .hero-image {
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(98, 71, 234, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 15px rgba(98, 71, 234, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(98, 71, 234, 0);
+      }
+    }
+    .pulse-animation {
+      animation: pulse 2s infinite;
+    }
+    .benefit-card {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .benefit-icon {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(45deg, #6247ea, #e94584);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .swiper {
+      width: 100%;
+      padding: 50px 0;
+    }
+    .swiper-slide {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 30px;
+      height: auto;
+      transition: all 0.3s ease;
+    }
+    .swiper-slide:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(98, 71, 234, 0.3);
+      border-color: rgba(98, 71, 234, 0.5);
+    }
+    .swiper-pagination-bullet {
+      background: #6247ea;
+      opacity: 0.5;
+      width: 12px;
+      height: 12px;
+      transition: all 0.3s ease;
+    }
+    .swiper-pagination-bullet-active {
+      background: linear-gradient(45deg, #6247ea, #e94584);
+      opacity: 1;
+      transform: scale(1.2);
+    }
+    .code-bg {
+      background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      z-index: 1;
+    }
+    .code-bg::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 14, 23, 0.85);
+      z-index: -1;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Custom Cursor -->
+  <div class="custom-cursor"></div>
+  <div class="cursor-follower"></div>
+
+  <!-- Smoke Background Elements -->
+  <div class="smoke" style="top: 20%; left: 10%;"></div>
+  <div class="smoke" style="top: 70%; left: 80%;"></div>
+  <div class="smoke" style="top: 40%; left: 60%;"></div>
+  <div class="smoke" style="top: 80%; left: 30%;"></div>
+  <div class="smoke" style="top: 10%; left: 70%;"></div>
+
+  <!-- Navigation -->
+  <nav class="fixed w-full z-50 bg-black bg-opacity-50 backdrop-filter backdrop-blur-lg">
+    <div class="container mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <a href="#" class="text-2xl font-bold gradient-text">Victor Gonçalves</a>
+        <div class="hidden md:flex space-x-8">
+          <a href="#home" class="nav-link active-nav text-white">Início</a>
+          <a href="#about" class="nav-link text-white">Sobre</a>
+          <a href="#benefits" class="nav-link text-white">O Que Ofereço</a>
+          <a href="#testimonials" class="nav-link text-white">Avaliações</a>
+          <a href="#experience" class="nav-link text-white">Experiência</a>
+          <a href="#contact" class="nav-link text-white">Contato</a>
+        </div>
+        <button class="md:hidden text-white focus:outline-none">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="fixed inset-0 bg-black bg-opacity-90 z-40 hidden flex-col items-center justify-center space-y-8">
+    <a href="#home" class="text-2xl font-bold gradient-text">Victor Gonçalves</a>
+    <a href="#home" class="text-xl text-white">Início</a>
+    <a href="#about" class="text-xl text-white">Sobre</a>
+    <a href="#benefits" class="text-xl text-white">O Que Ofereço</a>
+    <a href="#testimonials" class="text-xl text-white">Avaliações</a>
+    <a href="#experience" class="text-xl text-white">Experiência</a>
+    <a href="#contact" class="text-xl text-white">Contato</a>
+    <button class="absolute top-6 right-6 text-white text-2xl">
+            <i class="fas fa-times"></i>
+        </button>
+  </div>
+
+  <!-- Hero Section -->
+  <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20 code-bg">
+    <div class="container mx-auto px-6 flex flex-col md:flex-row items-center">
+      <div class="md:w-1/2 mb-12 md:mb-0">
+        <h1 class="text-4xl md:text-6xl font-bold mb-4">Olá, eu sou <span class="gradient-text">Victor Gonçalves</span>
+        </h1>
+        <h2 class="text-2xl md:text-3xl font-semibold mb-6">Desenvolvedor <span class="gradient-text">Fullstack</span>
+        </h2>
+        <p class="text-lg text-gray-300 mb-8">Transformando ideias em soluções digitais com código criativo e eficiente.
+        </p>
+        <div class="flex space-x-4">
+          <a href="#contact"
+            class="px-6 py-3 gradient-bg text-white rounded-full font-semibold hover:shadow-lg transition-all duration-300">Contate-me</a>
+          <a href="#benefits"
+            class="px-6 py-3 border border-purple-500 text-white rounded-full font-semibold hover:bg-purple-500 hover:bg-opacity-20 transition-all duration-300">Meus
+            Serviços</a>
+        </div>
+      </div>
+      <div class="md:w-1/2 flex justify-center">
+        <div class="relative">
+          <div
+            class="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-purple-800 hero-image pulse-animation">
+            <img src="https://i.postimg.cc/T14Z1TLv/apresentacao-img.avif" alt="programacao-img" class="w-full h-full object-cover">
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="py-20 bg-black bg-opacity-50 backdrop-filter backdrop-blur-sm">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 gradient-text">Sobre Mim</h2>
+      <div class="flex flex-col md:flex-row items-center">
+        <div class="md:w-1/3 mb-8 md:mb-0 flex justify-center">
+          <div class="relative">
+            <div class="w-64 h-64 rounded-full overflow-hidden border-4 border-purple-500">
+              <img src="https://i.postimg.cc/4dmG1mfZ/img-profile.jpg" alt="Victor Gonçalves" class="w-full h-full object-cover">
+            </div>
+            <div class="absolute -bottom-5 -right-5 bg-purple-600 px-4 py-2 rounded-full">
+              <span class="text-white font-semibold">Disponível</span>
+            </div>
+          </div>
+        </div>
+        <div class="md:w-2/3 md:pl-12">
+          <h3 class="text-2xl font-semibold mb-4">Minha Jornada</h3>
+          <p class="text-gray-300 mb-6">
+            Minha jornada na programação começou como uma simples curiosidade, mas logo se transformou em uma paixão
+            intensa. Aprendi que os problemas e desafios são resolvidos com persistência, tanto na programação quanto na
+            vida. Erros são oportunidades para crescer e aprender.
+          </p>
+          <p class="text-gray-300 mb-6">
+            Ficar horas ou até dias resolvendo um problema pode ser frustrante, mas é nesse processo que desenvolvemos
+            paciência, resiliência e a capacidade de pensar de forma lógica e criativa. Cada linha de código é uma
+            chance de criar algo incrível.
+          </p>
+          <p class="text-gray-300 mb-8">
+            Atualmente trabalho como desenvolvedor fullstack na Polícia Militar do Paraná (PMPR), onde aplico diversas
+            tecnologias para criar soluções eficientes. Além disso, estou no 3º semestre do curso de Análise e
+            Desenvolvimento de Sistemas na Universidade Positivo, aprimorando constantemente meus conhecimentos.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <div class="flex items-center bg-purple-900 bg-opacity-50 px-4 py-2 rounded-full">
+              <i class="fas fa-graduation-cap text-purple-400 mr-2"></i>
+              <span class="text-white">Universidade Positivo</span>
+            </div>
+            <div class="flex items-center bg-cyan-900 bg-opacity-50 px-4 py-2 rounded-full">
+              <i class="fas fa-briefcase text-cyan-400 mr-2"></i>
+              <span class="text-white">PMPR - Fullstack</span>
+            </div>
+            <div class="flex items-center bg-pink-900 bg-opacity-50 px-4 py-2 rounded-full">
+              <i class="fas fa-code text-pink-400 mr-2"></i>
+              <span class="text-white">2+ anos de experiência</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits Section -->
+  <section id="benefits" class="py-20 relative overflow-hidden">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 gradient-text">O Que Posso Proporcionar</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Benefit Cards -->
+        <div class="card p-8 rounded-xl benefit-card">
+          <div class="benefit-icon">
+            <i class="fas fa-laptop-code"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-4">Soluções Web Personalizadas</h3>
+          <p class="text-gray-300 mb-4">
+            Desenvolvo sistemas web sob medida para atender às necessidades específicas do seu negócio, garantindo
+            performance, segurança e escalabilidade.
+          </p>
+          <div class="mt-auto">
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1 bg-purple-900 bg-opacity-50 rounded-full text-sm text-purple-200">Web Apps</span>
+              <span class="px-3 py-1 bg-blue-900 bg-opacity-50 rounded-full text-sm text-blue-200">Sistemas</span>
+              <span class="px-3 py-1 bg-pink-900 bg-opacity-50 rounded-full text-sm text-pink-200">Personalizado</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card p-8 rounded-xl benefit-card">
+          <div class="benefit-icon">
+            <i class="fas fa-mobile-alt"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-4">Design Responsivo</h3>
+          <p class="text-gray-300 mb-4">
+            Crio interfaces que se adaptam perfeitamente a qualquer dispositivo, garantindo a melhor experiência do
+            usuário em smartphones, tablets e desktops.
+          </p>
+          <div class="mt-auto">
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1 bg-cyan-900 bg-opacity-50 rounded-full text-sm text-cyan-200">Mobile</span>
+              <span class="px-3 py-1 bg-green-900 bg-opacity-50 rounded-full text-sm text-green-200">Responsivo</span>
+              <span class="px-3 py-1 bg-yellow-900 bg-opacity-50 rounded-full text-sm text-yellow-200">UI/UX</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card p-8 rounded-xl benefit-card">
+          <div class="benefit-icon">
+            <i class="fas  fa-wand-magic-sparkles"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-4">Personalização e Estilização</h3>
+          <p class="text-gray-300 mb-4">
+            Implemento Personalização do jeito que preferir, cores, efeitos e muito mais...
+          </p>
+          <div class="mt-auto">
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1 bg-red-900 bg-opacity-50 rounded-full text-sm text-red-200">Personalização</span>
+              <span class="px-3 py-1 bg-blue-900 bg-opacity-50 rounded-full text-sm text-blue-200">Estilização</span>
+              <span class="px-3 py-1 bg-purple-900 bg-opacity-50 rounded-full text-sm text-purple-200">Responsividade</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card p-8 rounded-xl benefit-card">
+          <div class="benefit-icon">
+            <i class="fas fa-rocket"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-4">Performance Otimizada</h3>
+          <p class="text-gray-300 mb-4">
+            Desenvolvo aplicações com foco em alta performance, utilizando as melhores práticas de desenvolvimento para
+            garantir velocidade e eficiência.
+          </p>
+          <div class="mt-auto">
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1 bg-green-900 bg-opacity-50 rounded-full text-sm text-green-200">Otimização</span>
+              <span class="px-3 py-1 bg-yellow-900 bg-opacity-50 rounded-full text-sm text-yellow-200">Performance</span>
+              <span class="px-3 py-1 bg-red-900 bg-opacity-50 rounded-full text-sm text-red-200">Velocidade</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card p-8 rounded-xl benefit-card">
+          <div class="benefit-icon">
+            <i class="fas fa-lock"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-4">Segurança Avançada</h3>
+          <p class="text-gray-300 mb-4">
+            Implemento medidas de segurança robustas para proteger seus dados e sistemas contra ameaças, seguindo as
+            melhores práticas do mercado.
+          </p>
+          <div class="mt-auto">
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1 bg-blue-900 bg-opacity-50 rounded-full text-sm text-blue-200">Proteção</span>
+              <span class="px-3 py-1 bg-purple-900 bg-opacity-50 rounded-full text-sm text-purple-200">Criptografia</span>
+              <span class="px-3 py-1 bg-green-900 bg-opacity-50 rounded-full text-sm text-green-200">Segurança</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card p-8 rounded-xl benefit-card">
+          <div class="benefit-icon">
+            <i class="fas fa-headset"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-4">Suporte Contínuo</h3>
+          <p class="text-gray-300 mb-4">
+            Ofereço suporte técnico especializado após a entrega do projeto, garantindo que tudo funcione perfeitamente
+            e ajudando com eventuais ajustes.
+          </p>
+          <div class="mt-auto">
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1 bg-pink-900 bg-opacity-50 rounded-full text-sm text-pink-200">Suporte</span>
+              <span class="px-3 py-1 bg-cyan-900 bg-opacity-50 rounded-full text-sm text-cyan-200">Manutenção</span>
+              <span class="px-3 py-1 bg-yellow-900 bg-opacity-50 rounded-full text-sm text-yellow-200">Atualizações</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section id="testimonials" class="py-20 bg-black bg-opacity-50 backdrop-filter backdrop-blur-sm">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 gradient-text">Avaliações de Clientes</h2>
+
+      <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+          <!-- Testimonial Slides -->
+          <div class="swiper-slide">
+            <div class="flex items-center mb-6">
+              <div class="w-16 h-16 rounded-full overflow-hidden mr-4">
+                <img src="https://i.postimg.cc/RhcLbn20/Whats-App-Image-2025-05-28-at-10-23-11.jpg" alt="Cliente" class="w-full h-full object-cover">
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold">Guilherme Valente</h3>
+                <p class="text-purple-400">Especialista em Drinks <br>Contato:  41 9648-8979</p>
+              </div>
+            </div>
+            <div class="flex mb-4">
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="fas fa-star text-yellow-400"></i>
+            </div>
+            <p class="text-gray-300">
+              "O Victor foi fundamental na migração do nosso sistema legado para uma plataforma moderna. Sua capacidade
+              de resolver problemas complexos e explicar conceitos técnicos de forma clara fez toda a diferença no
+              projeto."
+            </p>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="flex items-center mb-6">
+              <div class="w-16 h-16 rounded-full overflow-hidden mr-4">
+                <img src="https://i.postimg.cc/hvsV1G8N/463308439-1081761006888841-4207574953699928927-n.jpg" alt="Cliente" class="w-full h-full object-cover">
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold">Priscila Cristine</h3>
+                <p class="text-purple-400">CEO - O Atacadista <br>Contato: 41 8868-0484</p>
+              </div>
+            </div>
+            <div class="flex mb-4">
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="fas fa-star text-yellow-400"></i>
+            </div>
+            <p class="text-gray-300">
+              "Trabalhar com o Victor foi uma experiência incrível. Ele não apenas entregou nosso site dentro do prazo,
+              mas também sugeriu melhorias que nem havíamos pensado. Seu conhecimento técnico e profissionalismo são
+              excepcionais."
+            </p>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="flex items-center mb-6">
+              <div class="w-16 h-16 rounded-full overflow-hidden mr-4">
+                <img src="https://i.postimg.cc/J0vbtFR2/98f8fdbe-6960-4e20-8620-3b30c0cb18d4.jpg" alt="Cliente" class="w-full h-full object-cover">
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold">Lucas Hartinger </h3>
+                <p class="text-purple-400">Estudante <br>Contato:  41 9734-5140</p>
+              </div>
+            </div>
+            <div class="flex mb-4">
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="fas fa-star-half-alt text-yellow-400"></i>
+            </div>
+            <p class="text-gray-300">
+              "Fiquei muito feliz com o resultado do site! O Vitor conseguiu criar algo simples, bonito e feito com
+              muito carinho como surpresa para minha namorada. Tudo ficou bem leve, intuitivo e fácil de navegar!"
+            </p>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="flex items-center mb-6">
+              <div class="w-16 h-16 rounded-full overflow-hidden mr-4">
+                <img src="https://i.postimg.cc/pXm28Jbx/Whats-App-Image-2025-05-28-at-10-30-46.jpg" alt="Cliente" class="w-full h-full object-cover">
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold">Mariana Litz</h3>
+                <p class="text-purple-400">Colaboradora - Arte Docecwb <br>Contato: 41 9136-6681</p>
+              </div>
+            </div>
+            <div class="flex mb-4">
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="fas fa-star text-yellow-400"></i>
+            </div>
+            <p class="text-gray-300">
+              "Contratamos o Victor para desenvolver nosso e-commerce e ficamos impressionados com o resultado. O site
+              não apenas é lindo, mas também extremamente funcional e rápido. O suporte pós-entrega também foi
+              excelente."
+            </p>
+          </div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience Section -->
+  <section id="experience" class="py-20 relative overflow-hidden">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 gradient-text">Minha Experiência</h2>
+
+      <div class="max-w-3xl mx-auto">
+        <!-- PMPR Experience -->
+        <div class="relative pl-8 mb-12 timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="card p-6 rounded-xl">
+            <div class="flex items-center mb-4">
+              <div class="w-12 h-12 rounded-full overflow-hidden mr-4 bg-white flex items-center justify-center">
+                <i class="fas fa-shield-halved text-2xl text-gray-800"></i>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold">Polícia Militar do Paraná - PMPR</h3>
+                <p class="text-gray-400">Desenvolvedor de software · Estágio</p>
+              </div>
+            </div>
+            <p class="text-gray-300 mb-4">ago de 2024 - o momento · 1+ ano · Curitiba, Paraná, Brasil · Presencial</p>
+            <p class="text-gray-300">
+              Estagiário da Policia Militar do Paraná (PMPR) - desenvolvedor full-stack | PHP, framework Laravel,
+              Javascript, framework jquery, Css, framework bootstrap | PostgreSQL | Git, Gitlab, Docker, Dbeaver | MVC
+            </p>
+            <p class="text-gray-300 mt-4">
+              Trabalhando na DDTQ, atuo como fullstack - com principais linguagem o javascript com jquery (ajax), CSS
+              com bootstrap, PHP com framework laravel, html, e PostgreSQL, com varias outras bibliotecas.
+            </p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class="px-3 py-1 bg-purple-900 bg-opacity-50 rounded-full text-sm text-purple-200">PHP</span>
+              <span class="px-3 py-1 bg-blue-900 bg-opacity-50 rounded-full text-sm text-blue-200">Laravel</span>
+              <span class="px-3 py-1 bg-yellow-900 bg-opacity-50 rounded-full text-sm text-yellow-200">JavaScript</span>
+              <span class="px-3 py-1 bg-pink-900 bg-opacity-50 rounded-full text-sm text-pink-200">jQuery</span>
+              <span class="px-3 py-1 bg-cyan-900 bg-opacity-50 rounded-full text-sm text-cyan-200">CSS</span>
+              <span class="px-3 py-1 bg-green-900 bg-opacity-50 rounded-full text-sm text-green-200">PostgreSQL</span>
+              <span class="px-3 py-1 bg-blue-900 bg-opacity-50 rounded-full text-sm text-blue-200">Docker</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- O Atacadista Experience -->
+        <div class="relative pl-8 mb-12 timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="card p-6 rounded-xl">
+            <div class="flex items-center mb-4">
+              <div class="w-12 h-12 rounded-full overflow-hidden mr-4 bg-white flex items-center justify-center">
+                <i class="fas fa-store text-2xl text-gray-800"></i>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold">O Atacadista</h3>
+                <p class="text-gray-400">Analista de marketing digital · Meio período</p>
+              </div>
+            </div>
+            <p class="text-gray-300 mb-4">mar de 2023 - jun de 2024 · 1 ano 4 meses · Curitiba, Paraná, Brasil · Remota
+            </p>
+            <p class="text-gray-300">
+              Eu era responsável por impulsionar a presença digital da empresa, desenvolvendo e implementando
+              estratégias de marketing eficazes. Além disso, gerenciava a criação e a publicação de conteúdo nas
+              plataformas de redes sociais, como Facebook e Instagram, bem como na loja online, visando aumentar o
+              alcance, engajamento e as vendas.
+            </p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class="px-3 py-1 bg-purple-900 bg-opacity-50 rounded-full text-sm text-purple-200">Marketing Digital</span>
+              <span class="px-3 py-1 bg-blue-900 bg-opacity-50 rounded-full text-sm text-blue-200">Redes Sociais</span>
+              <span class="px-3 py-1 bg-pink-900 bg-opacity-50 rounded-full text-sm text-pink-200">E-commerce</span>
+              <span class="px-3 py-1 bg-green-900 bg-opacity-50 rounded-full text-sm text-green-200">Conteúdo</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <!-- Education Section -->
+  <section class="py-20 bg-black bg-opacity-50 backdrop-filter backdrop-blur-sm">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 gradient-text">Formação Acadêmica</h2>
+
+      <div class="max-w-3xl mx-auto">
+        <div class="relative pl-8 timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="card p-6 rounded-xl">
+            <div class="flex items-center mb-4">
+              <div class="w-12 h-12 rounded-full overflow-hidden mr-4 bg-white flex items-center justify-center">
+                <i class="fas fa-university text-2xl text-gray-800"></i>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold">Universidade Positivo</h3>
+                <p class="text-gray-400">Curso Superior de Tecnologia (CST), Tecnologia da Informação</p>
+              </div>
+            </div>
+            <p class="text-gray-300 mb-4">jan de 2024 - dez de 2025 · Nota: ainda estou cursando</p>
+            <p class="text-gray-300">
+              Atuando na universidade positivo - período noturno. Estudando Análise e Desenvolvimento de Sistemas.
+            </p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class="px-3 py-1 bg-purple-900 bg-opacity-50 rounded-full text-sm text-purple-200">Programação</span>
+              <span class="px-3 py-1 bg-blue-900 bg-opacity-50 rounded-full text-sm text-blue-200">ADS</span>
+              <span class="px-3 py-1 bg-green-900 bg-opacity-50 rounded-full text-sm text-green-200">Tecnologia</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-20 relative overflow-hidden">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 gradient-text">Entre em Contato</h2>
+
+      <div class="flex flex-col md:flex-row">
+        <div class="md:w-1/2 mb-12 md:mb-0 md:pr-8">
+          <h3 class="text-2xl font-semibold mb-6">Vamos conversar!</h3>
+          <p class="text-gray-300 mb-8">
+            Estou sempre aberto a novas oportunidades, projetos interessantes ou apenas uma boa conversa sobre
+            tecnologia. Sinta-se à vontade para entrar em contato comigo através do formulário ou diretamente pelo
+            WhatsApp.
+          </p>
+
+          <div class="flex items-center mb-6">
+            <div class="w-12 h-12 rounded-full gradient-bg flex items-center justify-center mr-4">
+              <i class="fas fa-envelope text-white text-xl"></i>
+            </div>
+            <div>
+              <p class="text-gray-400">Email</p>
+              <p class="text-white">vtr.030@hotmail.com</p>
+            </div>
+          </div>
+
+          <div class="flex items-center mb-6">
+            <div class="w-12 h-12 rounded-full gradient-bg flex items-center justify-center mr-4">
+              <i class="fas fa-phone-alt text-white text-xl"></i>
+            </div>
+            <div>
+              <p class="text-gray-400">Telefone</p>
+              <p class="text-white">(+55) 41 98867-6917</p>
+            </div>
+          </div>
+
+          <div class="flex items-center mb-6">
+            <div class="w-12 h-12 rounded-full gradient-bg flex items-center justify-center mr-4">
+              <i class="fas fa-map-marker-alt text-white text-xl"></i>
+            </div>
+            <div>
+              <p class="text-gray-400">Localização</p>
+              <p class="text-white">Curitiba, Paraná, Brasil</p>
+            </div>
+          </div>
+
+          <a href="https://wa.me/5541988676917?text=Olá!%20Vi%20seu%20portfólio%20e%20gostaria%20de%20conversar."
+            target="_blank"
+            class="whatsapp-btn px-6 py-3 rounded-full text-white font-semibold inline-flex items-center">
+            <i class="fab fa-whatsapp text-xl mr-2"></i> Enviar mensagem pelo WhatsApp
+          </a>
+        </div>
+
+        <div class="md:w-1/2">
+          <form action="https://formspree.io/f/mpwdgbje" method="POST" onsubmit="enviarMensagem(event)"
+            class="space-y-6">
+            <div>
+              <label for="name" class="block text-gray-300 mb-2">Seu Nome</label>
+              <input type="text" id="name" name="name" required class="w-full px-4 py-3 rounded-lg contact-input text-white focus:outline-none">
+            </div>
+
+            <div>
+              <label for="email" class="block text-gray-300 mb-2">Seu Email</label>
+              <input type="email" id="email" name="email" required class="w-full px-4 py-3 rounded-lg contact-input text-white focus:outline-none">
+            </div>
+
+            <div>
+              <label for="subject" class="block text-gray-300 mb-2">Assunto</label>
+              <input type="text" id="subject" name="subject" class="w-full px-4 py-3 rounded-lg contact-input text-white focus:outline-none">
+            </div>
+
+            <div>
+              <label for="message" class="block text-gray-300 mb-2">Sua Mensagem</label>
+              <textarea id="message" name="message" rows="5" required class="w-full px-4 py-3 rounded-lg contact-input text-white focus:outline-none"></textarea>
+            </div>
+
+            <button type="submit" class="w-full gradient-bg text-white py-3 rounded-full font-semibold hover:shadow-lg transition-all duration-300">
+    Enviar Mensagem
+  </button>
+          </form>
+
+      
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 bg-black bg-opacity-70">
+    <div class="container mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-6 md:mb-0">
+          <a href="#" class="text-2xl font-bold gradient-text">Victor Gonçalves</a>
+          <p class="text-gray-400 mt-2">Desenvolvedor Fullstack</p>
+        </div>
+
+        <div class="flex space-x-6 mb-6 md:mb-0">
+          <a href="https://www.linkedin.com/in/victorgoncalvess/" target="_blank" rel="noopener"
+            class="text-gray-400 hover:text-white transition-colors duration-300">
+            <i class="fab fa-linkedin-in text-xl"></i>
+          </a>
+          <a href="https://github.com/vRushkz7" target="_blank" rel="noopener"
+            class="text-gray-400 hover:text-white transition-colors duration-300">
+            <i class="fab fa-github text-xl"></i>
+          </a>
+          <a href="https://www.instagram.com/_vtr.030/" target="_blank" rel="noopener"
+            class="text-gray-400 hover:text-white transition-colors duration-300">
+            <i class="fab fa-instagram text-xl"></i>
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=61576563132224" target="_blank" rel="noopener"
+            class="text-gray-400 hover:text-white transition-colors duration-300">
+            <i class="fab fa-facebook-f text-xl"></i>
+          </a>
+        </div>
+
+        <div class="text-gray-400 text-sm">
+          <p>&copy; 2024 Victor Gonçalves. Todos os direitos reservados.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    // Initialize Swiper
+        var swiper = new Swiper(".mySwiper", {
+            effect: "coverflow",
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: "auto",
+            coverflowEffect: {
+                rotate: 50,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: true,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 1,
+                },
+                768: {
+                    slidesPerView: 2,
+                },
+                1024: {
+                    slidesPerView: 3,
+                },
+            }
+        });
+        
+          function enviarMensagem(e) {
+    e.preventDefault();
+    const form = e.target;
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then(response => {
+      if (response.ok) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Mensagem enviada!',
+          text: 'Obrigado por entrar em contato. Retornarei em breve.',
+          confirmButtonColor: '#6247ea'
+        });
+        form.reset();
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Erro ao enviar',
+          text: 'Por favor, tente novamente mais tarde.',
+          confirmButtonColor: '#e94584'
+        });
+      }
+    }).catch(() => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro de conexão',
+        text: 'Não foi possível enviar a mensagem.',
+        confirmButtonColor: '#e94584'
+      });
+    });
+  }
+        // Custom Cursor
+        const cursor = document.querySelector('.custom-cursor');
+        const cursorFollower = document.querySelector('.cursor-follower');
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            
+            setTimeout(() => {
+                cursorFollower.style.left = e.clientX + 'px';
+                cursorFollower.style.top = e.clientY + 'px';
+            }, 100);
+        });
+        
+        // Add hover effects for links and buttons
+        const hoverElements = document.querySelectorAll('a, button, .tech-icon, .card, .swiper-slide');
+        
+        hoverElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                cursorFollower.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                cursorFollower.style.width = '30px';
+                cursorFollower.style.height = '30px';
+            });
+            
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursorFollower.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursorFollower.style.width = '40px';
+                cursorFollower.style.height = '40px';
+            });
+        });
+        
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('button.md\\:hidden');
+        const mobileMenu = document.querySelector('.fixed.inset-0.bg-black');
+        const mobileMenuCloseBtn = document.querySelector('.fixed.inset-0.bg-black button');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden');
+            mobileMenu.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        mobileMenuCloseBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            mobileMenu.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenu.classList.remove('flex');
+                        document.body.style.overflow = 'auto';
+                    }
+                }
+            });
+        });
+        
+        // Active nav link on scroll
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active-nav');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active-nav');
+                }
+            });
+        });
+  </script>
+<p style="border-radius: 8px; text-align: center; font-size: 12px; color: #fff; margin-top: 16px;position: fixed; left: 8px; bottom: 8px; z-index: 10; background: rgba(0, 0, 0, 0.8); padding: 4px 8px;">Made with <img src="https://enzostvs-deepsite.hf.space/logo.svg" alt="DeepSite Logo" style="width: 16px; height: 16px; vertical-align: middle;display:inline-block;margin-right:3px;filter:brightness(0) invert(1);"><a href="https://enzostvs-deepsite.hf.space" style="color: #fff;text-decoration: underline;" target="_blank" >DeepSite</a> - 🧬 <a href="https://enzostvs-deepsite.hf.space?remix=Rushzin7/minhaapresentacao" style="color: #fff;text-decoration: underline;" target="_blank" >Remix</a></p></body>
+
+</html>
